@@ -29,7 +29,9 @@ class ProfilerAgent(BaseSalesAgent):
             4. Identify Goal: Where do they want to be in 6 months?
             
             TRANSITION:
-            - Once you have clear answers for Persona, Motivation, and Goal, call `submit_profile_and_handoff`.
+            - Once you have clear answers for Persona, Motivation, and Goal, call `submit_profile_and_handoff` IMMEDIATELY.
+            - **CRITICAL**: DO NOT say "I will submit your profile" or "I am moving you". Just call the tool silently.
+            - **CRITICAL**: DO NOT wait for user confirmation ("Ok"). Just call the tool.
             
             RULES:
             - Be curious, not interrogation-style. "That's interesting, tell me more..."

@@ -61,7 +61,11 @@ class StrategistAgent(BaseSalesAgent):
             1. Validate their Goal: "Given that you want to {{{{context.career_goal or 'grow'}}}}, the generic path won't work."
             2. Present the 'New Way': Explain how our AI Accelerator specifically helps *THEM* (using the Strategy above).
             3. Check Alignment: "Does this approach of building {{{{context.career_goal}}}} sound like the right path for you?"
-            4. If they agree -> call `handoff_to_closing`.
+            4. If they agree -> call `handoff_to_closing` IMMEDIATELY.
+            
+            TRANSITION RULES:
+            - **CRITICAL**: DO NOT say "Great, I'll move you to closing". Just call the tool.
+            - **CRITICAL**: DO NOT wait for "Ok" after they agree. Call the tool.
             
             RULES:
             - WEAVE insights. Don't lecture.
