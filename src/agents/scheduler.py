@@ -36,7 +36,7 @@ class SchedulerAgent(BaseSalesAgent):
         )
         # Kickstart generation to solve silence on handoff
         if self.sales_context.session:
-            asyncio.create_task(self.sales_context.session.generate_reply())
+            asyncio.create_task(self.kickstart_generation())
 
     @llm.function_tool(description="Confirm the user wants to attend the next session.")
     async def confirm_reschedule(self, 

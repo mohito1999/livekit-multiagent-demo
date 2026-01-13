@@ -99,6 +99,13 @@ class BaseSalesAgent(agents.Agent):
                  else:
                      first_message.content.insert(0, base_instructions + "\n\n")
 
+    async def kickstart_generation(self):
+        """Forces the agent to generate a reply immediately (awaits the SpeechHandle)."""
+        if self.sales_context.session:
+            # generate_reply returns a SpeechHandle, which is awaitable but not a coroutine func
+            handle = self.sales_context.session.generate_reply()
+            await handle
+
     def get_context_description(self) -> str:
         """Returns a string description of the current context for the LLM."""
         return f"""
