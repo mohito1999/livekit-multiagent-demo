@@ -1,0 +1,24 @@
+Transcript for Job: AJ_XW4DE7SGeWsT
+Date: 2026-01-13T23:16:48.692787
+========================================
+
+[ASSISTANT]: Hi, this is Rohan calling from bee ten ex. Am I speaking to Mohit?
+
+[USER]: Yes.
+
+[ASSISTANT]: Great to hear from you, Mohit! I'm calling about the "Mastering AI Agents with LLMs" workshop we had on Sunday. Just wanted to check—how was the experience for you?
+
+[USER]: Yeah, it was good.
+
+[ASSISTANT]: That’s awesome to hear! What part stood out for you? Was it the tools or the strategy?
+
+[USER]: Everything was good.
+
+[ASSISTANT]: I’m glad to hear that! Let me get a bit more info so we can tailor our future interactions. I'll just log this and move you to our profiler.
+
+[USER]: Ok.
+
+[UNKNOWN TYPE]: id='item_f98c602723e2/fnc_0' type='function_call' call_id='call_G0tN2x1VnNjqntWe0y8KWTDC' arguments='{}' name='handoff_to_profiler' created_at=1768326292.20704 extra={} group_id=None
+
+[UNKNOWN TYPE]: id='item_875a4135ea73' type='function_call_output' name='handoff_to_profiler' call_id='call_G0tN2x1VnNjqntWe0y8KWTDC' output='' is_error=False created_at=1768326292.20704
+

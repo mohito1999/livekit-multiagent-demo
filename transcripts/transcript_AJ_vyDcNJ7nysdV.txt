@@ -1,0 +1,20 @@
+Transcript for Job: AJ_vyDcNJ7nysdV
+Date: 2026-01-13T23:24:36.801852
+========================================
+
+[ASSISTANT]: Hi, this is Rohan calling from bee ten ex. Am I speaking to Mohit?
+
+[USER]: Yes speaking.
+
+[ASSISTANT]: Hi Mohit, I'm calling about the workshop on 'Mastering AI Agents with LLMs' that took place on Sunday. Just wanted to check—how was the experience for you?
+
+[USER]: It was great.
+
+[ASSISTANT]: That's impactful, Mohit! I'm curious, what part stood out to you the most? Was it the tools or the strategy?
+
+[USER]: Yeah, I enjoyed everything. The tools were very interesting also.
+
+[UNKNOWN TYPE]: id='item_ea2486d8a6ec/fnc_0' type='function_call' call_id='call_0CuwlmYV2qY22awQkpDkwVAk' arguments='{}' name='explore_profile_depth' created_at=1768326638.7099788 extra={} group_id=None
+
+[UNKNOWN TYPE]: id='item_7511f8764273' type='function_call_output' name='explore_profile_depth' call_id='call_0CuwlmYV2qY22awQkpDkwVAk' output='' is_error=False created_at=1768326638.7099788
+

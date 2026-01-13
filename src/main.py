@@ -63,6 +63,7 @@ async def entrypoint(ctx: JobContext):
     )
 
     # Start the session with the agent
+    sales_context.session = session # Inject session so agents can trigger generation
     await session.start(room=ctx.room, agent=agent)
 
     # Transcript Saving Hook
@@ -77,7 +78,12 @@ async def entrypoint(ctx: JobContext):
             f.write(f"Date: {datetime.now().isoformat()}\n")
             f.write("="*40 + "\n\n")
             
-            for msg in agent.chat_ctx.items:
+            # Retrieve the *current* agent's context (handling handoffs)
+            # Use the active_agent tracked in context, fallback to initial agent
+            current_agent = sales_context.active_agent if sales_context.active_agent else agent
+            current_ctx = current_agent.chat_ctx
+            
+            for msg in current_ctx.items:
                 # Handle standard ChatMessage
                 if hasattr(msg, "role"):
                     role = msg.role.upper()

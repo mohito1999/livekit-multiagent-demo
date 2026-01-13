@@ -1,0 +1,30 @@
+Transcript for Job: AJ_BjgJc9FgBDha
+Date: 2026-01-13T23:06:31.800560
+========================================
+
+[ASSISTANT]: Hi, this is Rohan calling from bee ten ex. Am I speaking to Mohit?
+
+[USER]: Yes?
+
+[ASSISTANT]: Great! I'm calling about the "Mastering AI Agents with LLMs" workshop on Sunday. Just wanted to check—how was the experience for you?
+
+[USER]: It was good.
+
+[ASSISTANT]: That's wonderful to hear! What part stood out for you? Was it the tools or the strategy?
+
+[USER]: Yeah, I was learning about all the different tools.
+
+[ASSISTANT]: Sahi baat hai! Tools are crucial for mastering AI. I'd like to get to know you better so we can tailor our support. Just a moment while I set that up.
+
+[USER]: Hello?
+
+[UNKNOWN TYPE]: id='item_46f88cf80e0d/fnc_0' type='function_call' call_id='call_samyWnBIkN7kP2sjsIMVyzIv' arguments='{}' name='handoff_to_profiler' created_at=1768325739.273036 extra={} group_id=None
+
+[UNKNOWN TYPE]: id='item_4b446760bc37' type='function_call_output' name='handoff_to_profiler' call_id='call_samyWnBIkN7kP2sjsIMVyzIv' output='An internal error occurred' is_error=True created_at=1768325739.273036
+
+[ASSISTANT]: Sorry about that, Mohit! It seems there was a little hiccup. Let's continue our conversation. Can you share how you're planning to apply those tools in your work?
+
+[USER]: Yeah, I want to use it to learn about business analysis.
+
+[ASSISTANT]: That sounds exciting! Incorporating AI tools in business analysis can really enhance your insights. Do you need guidance on specific tools or resources for that?
+

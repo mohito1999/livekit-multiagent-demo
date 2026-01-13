@@ -14,6 +14,11 @@ class SalesContext:
     leads_context_summary: str = "Fresh Lead"
     today_date: str = "Friday, December 5th, 2025"
     
+    # Company & Product Info
+    company_name: str = "bee-ten-ex (Be10X)"
+    company_mission: str = "Helping professionals master AI tools to future-proof their careers."
+    workshop_topic: str = "Mastering AI Agents with LLMs"
+    
     # Pricing Configuration
     retail_price: str = "Forty-five thousand two hundred rupees"
     price_level_1_discount: str = "Thirty-eight thousand rupees"
@@ -22,11 +27,21 @@ class SalesContext:
     full_payment_discount_rate: str = "10 percent"
 
     # Session State
-    persona: Optional[Literal["Student", "Professional"]] = None
+    persona: Optional[Literal["Student", "Professional", "Business Owner", "Homemaker"]] = None
     identified_pain_point: Optional[str] = None
     saw_pitch: bool = False
+    
+    # Adaptive Flow State
+    workshop_rating: Optional[str] = None # 'positive', 'neutral', 'negative'
+    attendance_depth: Optional[str] = None # 'missed', 'partial', 'full'
+    motivation: Optional[str] = None
+    career_goal: Optional[str] = None
+    next_session_proposed: Optional[str] = None
+    
     current_price_revealed: Optional[Literal["retail", "scholarship", "floor"]] = None
     objections_log: List[str] = field(default_factory=list)
+    active_agent: Optional[object] = None # Track the currently running agent
+    session: Optional[object] = None # Reference to the main AgentSession
     
 
 class BaseSalesAgent(agents.Agent):
@@ -37,6 +52,8 @@ class BaseSalesAgent(agents.Agent):
         **kwargs,
     ):
         self.sales_context = context
+        # Register self as the active agent for transcript logging
+        self.sales_context.active_agent = self
         
         # Base instructions that apply to ALL agents
         base_instructions = f"""
@@ -44,7 +61,10 @@ class BaseSalesAgent(agents.Agent):
         
         CONTEXT VARIABLES:
         - Lead Name: {context.lead_name}
+        - Company: {context.company_name}
+        - Mission: {context.company_mission}
         - Workshop Date: {context.workshop_date}
+        - Workshop Topic: {context.workshop_topic}
         - Lead Summary: {context.leads_context_summary}
         - Today's Date: {context.today_date}
         
@@ -84,6 +104,8 @@ class BaseSalesAgent(agents.Agent):
         return f"""
         Current State:
         - Persona: {self.sales_context.persona or 'Unknown'}
+        - Motivation: {self.sales_context.motivation or 'Unknown'}
+        - Attendance: {self.sales_context.attendance_depth or 'Unknown'}
         - Pain Point: {self.sales_context.identified_pain_point or 'Unknown'}
         - Saw Pitch: {self.sales_context.saw_pitch}
         - Price Revealed: {self.sales_context.current_price_revealed or 'None'}

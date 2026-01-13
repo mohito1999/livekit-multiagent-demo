@@ -1,95 +1,86 @@
-from typing import Annotated
+from typing import Annotated, Literal
 from livekit.agents import llm
-from .base import BaseSalesAgent, SalesContext
-# lazy import for DiscoveryAgent to avoid circular dependency
-
 import logging
+from .base import BaseSalesAgent
 
 logger = logging.getLogger("rohan.agents.rapport")
 
 class RapportAgent(BaseSalesAgent):
     def __init__(
         self,
-        context: SalesContext,
-        chat_ctx: llm.ChatContext | None = None,
-        **kwargs,
+        **kwargs
     ):
-        instructions = f"""
-        You are in PHASE 1: RAPPORT BUILDING. 
-        
-        GOAL: Warm Start -> gentle Check-in -> HANDOFF.
-        
-        YOUR OBJECTIVES:
-        1. If they confirm name: "Great. I just wanted to personally check in after the workshop on {context.workshop_date}."
-        2. Soft Ask: "How did you find the session? Was it helpful?" (Intent A).
-        3. Soft Check: "Were you able to stay till the end for the program details?" (Intent B).
-        4. CRITICAL: Once you have Feedback + Attendance, move to Discovery.
-        
-        RULES:
-        - SOFTEN THE TONE. No military precision. Be warm.
-        - "Glad to hear that" / "No worries at all".
-        - KEEP IT SHORT.
-        """
-        
         super().__init__(
-            context=context,
-            chat_ctx=chat_ctx,
-            instructions=instructions,
+            instructions="""
+            You are in PHASE 1: RAPPORT BUILDING (The Host).
+            
+            GOAL: Warm Start -> Audit Workshop Experience -> Route to Correct Path.
+            
+            YOUR OBJECTIVES:
+            1. Check In: "Hi Mohit, I'm Rohan from {context.company_name}. Calling about the '{context.workshop_topic}' workshop on Sunday. Just wanted to check—how was the experience for you?"
+            2. Dig for Detail: 
+               - If they liked it: "What part stood out? The tools? The strategy?"
+               - If they missed it/left early: "Ah, no worries."
+            3. ROUTING (CRITICAL):
+               - If Missed/Left Early -> Call `check_schedule_availability`.
+               - If Liked -> Say: "That's impactful. I'm curious..." -> Call `explore_profile_depth` immediately.
+               - If Hated -> Apologize, get feedback, and Say Goodbye.
+            
+            RULES:
+            - NO "TRANSFERRING/LOGGING": Do NOT say "I will log this" or "I will move you".
+            - You are the same person. Just continue the thought.
+            - "Life happens" attitude for missed sessions.
+            - KEEP IT SHORT.
+            """,
             **kwargs
         )
 
-    @llm.function_tool(description="Log the user's feedback about the workshop")
-    async def log_feedback(
-        self, 
-        feedback_summary: str
+    @llm.function_tool(description="Log feedback and attendance details.")
+    async def log_workshop_details(self,
+        rating: Literal["positive", "neutral", "negative"],
+        attendance: Literal["full", "partial", "missed"],
+        feedback_note: str
     ):
         """
-        Log the user's feedback about the workshop.
-
+        Logs the workshop experience.
+        
         Args:
-            feedback_summary: Summary of the user's feedback
+            rating: How they felt about the workshop
+            attendance: Did they attend the whole thing?
+            feedback_note: Short summary of their feedback
         """
-        logger.info(f"Feedback received: {feedback_summary}")
-        self.sales_context.leads_context_summary += f" | Workshop Feedback: {feedback_summary}"
-        return "Feedback logged. Acknowledge it warmly and ask if they saw the end of the workshop."
+        self.sales_context.workshop_rating = rating
+        self.sales_context.attendance_depth = attendance
+        logger.info(f"WORKSHOP LOG: Rating={rating}, Attendance={attendance} | {feedback_note}")
+        return "Noted regarding their experience."
 
-    @llm.function_tool(description="Confirm if the user saw the pitch at the end of the workshop")
-    async def confirm_attendance(
-        self, 
-        saw_pitch: bool
-    ):
-        """
-        Confirm if the user saw the pitch at the end of the workshop.
-
-        Args:
-            saw_pitch: True if they saw the pitch, False otherwise
-        """
-        self.sales_context.saw_pitch = saw_pitch
-        logger.info(f"Saw pitch: {saw_pitch}")
-        return "Attendance confirmed. Now pivot to asking about their single biggest career challenge."
-
-    @llm.function_tool(description="Transition to discovery phase once feedback is collected and verified")
-    async def handoff_to_discovery(self):
-        """
-        Transition to discovery phase once feedback is collected and verified.
+    @llm.function_tool(description="Check for next available slots if they missed the workshop.")
+    async def check_schedule_availability(self):
+        """Routes to the Scheduler Agent."""
+        from .scheduler import SchedulerAgent
         
-        CRITERIA FOR TRANSITION:
-        1. User has provided feedback on the workshop.
-        2. User has confirmed whether they saw the pitch.
-        """
-        from .discovery import DiscoveryAgent
+        # Create a mutable copy of the context/history
+        new_ctx = self.chat_ctx.copy()
+        new_ctx.add_message(role="system", content="TRANSITION: RAPPORT -> SCHEDULER. User missed content.")
+        new_ctx.add_message(role="user", content="(User is waiting for your help to reschedule.)")
         
-        # Log transition to Chat Context
-        self.chat_ctx.add_message(
-            role="system",
-            content="TRANSITION: RAPPORT -> DISCOVERY. Criteria Met: Feedback collected & Attendance confirmed."
-        )
-        
-        logger.info("\n\n" + "="*40)
-        logger.info(" TRANSITION: RAPPORT -> DISCOVERY")
-        logger.info("="*40 + "\n")
-        
-        return DiscoveryAgent(
+        return SchedulerAgent(
             context=self.sales_context,
-            chat_ctx=self.chat_ctx,
+            chat_ctx=new_ctx
+        )
+
+    @llm.function_tool(description="Acknowledge feedback and pivot to understanding their background.")
+    async def explore_profile_depth(self):
+        """Routes to the Profiler Agent."""
+        from .profiler import ProfilerAgent
+        
+        # Create a mutable copy of the context/history
+        new_ctx = self.chat_ctx.copy()
+        new_ctx.add_message(role="system", content="TRANSITION: RAPPORT -> PROFILER. User engagement confirmed.")
+        # FORCE GENERATION: Add a dummy user message so the new agent speaks immediately.
+        new_ctx.add_message(role="user", content="(User is listening. Please continue smoothy.)")
+        
+        return ProfilerAgent(
+            context=self.sales_context,
+            chat_ctx=new_ctx
         )

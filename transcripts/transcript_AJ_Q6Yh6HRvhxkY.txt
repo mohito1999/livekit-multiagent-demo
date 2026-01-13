@@ -1,0 +1,28 @@
+Transcript for Job: AJ_Q6Yh6HRvhxkY
+Date: 2026-01-13T23:00:33.792491
+========================================
+
+[ASSISTANT]: Hi, this is Rohan calling from bee ten ex. Am I speaking to Mohit?
+
+[USER]: Yes
+
+[ASSISTANT]: Great! I wanted to check in about the workshop on Sunday, November thirtieth. How was the experience for you?
+
+[USER]: Sorry, which workshop is this?
+
+[ASSISTANT]: No problem at all! It was the workshop we hosted on Sunday, November thirtieth. Did you get a chance to attend?
+
+[USER]: But which workshop
+
+[USER]: I attended multiple workshops.
+
+[ASSISTANT]: Ah, sahi baat hai! If you could remind me which one you’re referring to, I'll be happy to assist you further.
+
+[USER]: Yeah, I attended the workshop.
+
+[ASSISTANT]: That's awesome to hear! What part of the workshop stood out for you? The tools or the strategy?
+
+[USER]: All the tools?
+
+[ASSISTANT]: Fantastic! It’s great that you found the tools valuable. I'll connect you to someone who can help you explore them further. Just a moment, please.
+

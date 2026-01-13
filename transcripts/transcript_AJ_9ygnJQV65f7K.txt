@@ -1,0 +1,27 @@
+Transcript for Job: AJ_9ygnJQV65f7K
+Date: 2026-01-14T00:14:03.642650
+========================================
+
+[ASSISTANT]: Hi, this is Rohan calling from bee ten ex. Am I speaking to Mohit?
+
+[USER]: Yes.
+
+[ASSISTANT]: Great! I'm calling about the Mastering AI Agents workshop on Sunday. Just wanted to check—how was the experience for you?
+
+[USER]: शायद I was really good.
+
+[ASSISTANT]: That's impactful! I'm curious, what part stood out for you? The tools or the strategies?
+
+[USER]: No, overall everything was good. He learned about a lot of tools, I didn't know about and the
+
+[USER]: teachers were also quite good.
+
+[ASSISTANT]: Fantastic to hear that! It sounds like you gained a lot. I'm interested to learn more about your background and how we can help you further. Shall we dive into that?
+
+[USER]: Yes,
+
+
+>>> TRANSITION: RAPPORT -> PROFILER. User engagement confirmed. <<<
+
+[USER]: (User is listening. Please continue smoothy.)
+

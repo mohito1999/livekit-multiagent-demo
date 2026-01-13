@@ -1,0 +1,26 @@
+Transcript for Job: AJ_4hexYvMMyG2U
+Date: 2026-01-13T23:10:46.809884
+========================================
+
+[ASSISTANT]: Hi, this is Rohan calling from bee ten ex. Am I speaking to Mohit?
+
+[USER]: Yes.
+
+[ASSISTANT]: Great! I'm calling about the "Mastering AI Agents with LLMs" workshop we held on Sunday. Just wanted to check—how was the experience for you?
+
+[USER]: It was great.
+
+[ASSISTANT]: That's fantastic to hear! What part stood out to you the most—the tools we discussed or the strategies we covered?
+
+[USER]: Everything, बहुत थोड़ा liquid.
+
+[ASSISTANT]: Sahi baat hai! Sounds like you found value in the session. I'll log this feedback, and then we can explore some next steps for you.
+
+[USER]: Ok.
+
+[UNKNOWN TYPE]: id='item_c7c16ba9dd2d/fnc_0' type='function_call' call_id='call_WAootLGAMIN8xaNG1xEr4SsR' arguments='{}' name='handoff_to_profiler' created_at=1768326017.263763 extra={} group_id=None
+
+[UNKNOWN TYPE]: id='item_8933ca659ed4' type='function_call_output' name='handoff_to_profiler' call_id='call_WAootLGAMIN8xaNG1xEr4SsR' output='An internal error occurred' is_error=True created_at=1768326017.263763
+
+[ASSISTANT]: Looks like we're experiencing a small glitch. No worries, I'll
+
