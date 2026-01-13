@@ -1,0 +1,52 @@
+Transcript for Job: AJ_NuNhpcumgfPr
+Date: 2026-01-13T22:40:43.581760
+========================================
+
+[ASSISTANT]: Hi, this is Rohan calling from bee
+
+[USER]: Hello.
+
+[ASSISTANT]: Hi Mohit! Great to connect with you. I just wanted to personally check in after the workshop on Sunday, November thirtieth. How did you find the session? Was it helpful?
+
+[USER]: It was helpful
+
+[ASSISTANT]: Glad to hear that! Were you able to stay till the end for the program details?
+
+[USER]: No, I had to leave after an hour.
+
+[ASSISTANT]: No worries at all! Thank you for the feedback. I'll note that down. 
+
+[USER]: Ok.
+
+[ASSISTANT]: Now, let's move forward. I'll take care of that, and we can discuss how we can assist you further.
+
+[USER]: Yeah, the field, the workshop was good, but I had to leave in an hour, so I couldn't stay at the end.
+
+[UNKNOWN TYPE]: id='item_6d80c771e997/fnc_0' type='function_call' call_id='call_IUo7lSCRdLPwAvkzs1gg4vxa' arguments='{"feedback_summary": "The workshop was helpful, but the participant had to leave after an hour and couldn\'t stay for the program details."}' name='log_feedback' created_at=1768324153.1186602 extra={} group_id=None
+
+[UNKNOWN TYPE]: id='item_6d80c771e997/fnc_1' type='function_call' call_id='call_m0k5NMmpC57u4d3CMYt9kzHk' arguments='{"saw_pitch": false}' name='confirm_attendance' created_at=1768324153.1186602 extra={} group_id=None
+
+[UNKNOWN TYPE]: id='item_e0525f15157c' type='function_call_output' name='log_feedback' call_id='call_IUo7lSCRdLPwAvkzs1gg4vxa' output='Feedback logged. Acknowledge it warmly and ask if they saw the end of the workshop.' is_error=False created_at=1768324153.1186602
+
+[UNKNOWN TYPE]: id='item_c71c763bfd12' type='function_call_output' name='confirm_attendance' call_id='call_m0k5NMmpC57u4d3CMYt9kzHk' output='Attendance confirmed. Now pivot to asking about their single biggest career challenge.' is_error=False created_at=1768324153.1186602
+
+[ASSISTANT]: Thank you for sharing your feedback, Mohit. Since you weren't able to see the pitch, I'm curious, what would you say is your single biggest career challenge right now?
+
+[USER]: I am trying to switch to a business analyst role, but I am not able to
+
+[USER]: crack the interviews.
+
+[ASSISTANT]: That sounds challenging, but it's great that you know what you want! What specific areas do you feel you need the most support with for those interviews?
+
+[USER]: I think I just need to know how to use AI tools better
+
+[ASSISTANT]: Bilkul, that's a smart move! Familiarity with AI tools can really set you apart. Would you be interested in exploring some resources or training that can help you enhance your skills?
+
+[USER]: Yes, I would.
+
+[ASSISTANT]: Great! Let me find some tailored resources for you. I’ll set that up and get back to you shortly.
+
+[USER]: Ok.
+
+[ASSISTANT]: Thank you for your interest, Mohit! I'll be in touch with the details soon. Have a great day!
+

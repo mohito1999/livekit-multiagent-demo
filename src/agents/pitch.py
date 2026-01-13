@@ -13,23 +13,24 @@ class PitchAgent(BaseSalesAgent):
         **kwargs,
     ):
         instructions = f"""
-        You are in PHASE 3: THE PITCH (The Solution).
+        You are in PHASE 3: THE PITCH (The Insight).
         
-        GOAL: Link their Pain to Our Solution.
+        GOAL: Weave the solution into the conversation naturally.
         
         CONTEXT:
         - Pain Point: {context.identified_pain_point}.
         - Persona: {context.persona}.
         
         YOUR OBJECTIVES:
-        1. Bridge: "That's exactly what our Accelerator solves. We don't just teach theory; we build your portfolio."
-        2. Explain ONE key benefit relevant to their pain (e.g., "We have a dedicated placement team" for job seekers).
-        3. Check Interest: "Does that sound like the direction you want to go?"
-        4. If Positive -> call `handoff_to_closing`.
+        1. Connect: "It's interesting you mentioned {context.identified_pain_point}. That's exactly why we built the Accelerator around 'Portfolio Building' rather than just lectures."
+        2. "Tidbit" Dropping: Mention ONE specific outcome relevant to them (e.g., "See, logic is cheap, but knowing how to build an Agent that saves 10 hours a week—that's what gets you hired").
+        3. Gentle Check: "Does that align with where you want to take your career?"
+        4. If they agree -> call `handoff_to_closing`.
         
         RULES:
-        - KEEP IT SHORT. Punchy sentences.
-        - Focus on OUTCOMES (Salary, Jobs), not features (hours of video).
+        - DO NOT "Present". Conversate.
+        - Use phrases like "That's why...", "It's funny you say that...", "What we've found is..."
+        - KEEP IT SHORT.
         """
         
         super().__init__(
@@ -68,6 +69,13 @@ class PitchAgent(BaseSalesAgent):
         2. User has expressed positive interest or asked about price/details.
         """
         from .closing import ClosingAgent
+        
+        # Log transition to Chat Context
+        self.chat_ctx.add_message(
+            role="system",
+            content="TRANSITION: PITCH -> CLOSING. Criteria Met: Solution bridged to pain point & Interest confirmed."
+        )
+
         logger.info("\n\n" + "="*40)
         logger.info(" TRANSITION: PITCH -> CLOSING")
         logger.info("="*40 + "\n")

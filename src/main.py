@@ -3,6 +3,7 @@ import os
 from dotenv import load_dotenv
 from livekit.agents import AutoSubscribe, JobContext, WorkerOptions, cli, llm, AgentSession
 from livekit.agents import inference
+from datetime import datetime
 
 from agents.base import SalesContext
 from agents.rapport import RapportAgent
@@ -63,7 +64,53 @@ async def entrypoint(ctx: JobContext):
 
     # Start the session with the agent
     await session.start(room=ctx.room, agent=agent)
-    
+
+    # Transcript Saving Hook
+    async def save_transcript():
+        os.makedirs("transcripts", exist_ok=True)
+        # Fix: Use ctx.job.id instead of ctx.job_id
+        job_id = ctx.job.id
+        file_path = f"transcripts/transcript_{job_id}.txt"
+        
+        with open(file_path, "w") as f:
+            f.write(f"Transcript for Job: {job_id}\n")
+            f.write(f"Date: {datetime.now().isoformat()}\n")
+            f.write("="*40 + "\n\n")
+            
+            for msg in agent.chat_ctx.items:
+                # Handle standard ChatMessage
+                if hasattr(msg, "role"):
+                    role = msg.role.upper()
+                    content = msg.content
+                    
+                    # Handle list content (common in new LLM APIs)
+                    if isinstance(content, list):
+                        content = " ".join([str(c) for c in content])
+                    
+                    # Handle Transitions (System Logs)
+                    if "TRANSITION" in str(content):
+                        f.write(f"\n>>> {content} <<<\n\n")
+                        continue
+                        
+                    # Skip boring system prompts
+                    if role == "SYSTEM":
+                        continue
+                        
+                    f.write(f"[{role}]: {content}\n\n")
+                
+                # Handle Function Calls/Tool Outputs
+                elif hasattr(msg, "function"): 
+                    # specific to your error which said FunctionCall
+                    f.write(f"[TOOL REQUEST]: {msg.name if hasattr(msg, 'name') else 'UnknownTool'}({msg.arguments})\n\n")
+                
+                # Handle anything else
+                else:
+                    f.write(f"[UNKNOWN TYPE]: {str(msg)}\n\n")
+                
+        logger.info(f"Transcript saved to {file_path}")
+
+    ctx.add_shutdown_callback(save_transcript)
+
     # Trigger the initial greeting
     await session.generate_reply(instructions=f"Say exactly: 'Hi, this is Rohan calling from bee ten ex. Am I speaking to {sales_context.lead_name}?'")
 

@@ -1,0 +1,20 @@
+Transcript for Job: AJ_nC9vUJeBBcQe
+Date: 2026-01-13T22:36:58.714287
+========================================
+
+[ASSISTANT]: Hi, this is Rohan calling from bee ten ex. Am I speaking to Mohit?
+
+[USER]: हां बताइए.
+
+[ASSISTANT]: Great. I just wanted to personally check in after the workshop on Sunday, November thirtieth. How did you find the session? Was it helpful?
+
+[USER]: Yeah, it was good, it was helpful.
+
+[ASSISTANT]: Glad to hear that! Were you able to stay till the end for the program details?
+
+[USER]: No no I had to leave after an hour
+
+[ASSISTANT]: No worries at all. Let me log your feedback and we can discuss the program details further. Just to confirm, you found the session helpful but couldn't stay till the end, right?
+
+[USER]: Yes, that's right.
+

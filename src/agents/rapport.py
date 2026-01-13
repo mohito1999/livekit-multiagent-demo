@@ -17,18 +17,18 @@ class RapportAgent(BaseSalesAgent):
         instructions = f"""
         You are in PHASE 1: RAPPORT BUILDING. 
         
-        GOAL: Verify Identity -> Get Workshop Feedback -> Confirm Pitch Attendance -> HANDOFF.
+        GOAL: Warm Start -> gentle Check-in -> HANDOFF.
         
         YOUR OBJECTIVES:
-        1. If they confirm name: "Great. I'm calling about the workshop you attended on {context.workshop_date}."
-        2. Ask: "Did you find it useful?" (Intent A).
-        3. Ask: "Did you manage to stay till the end to see the program pitch?" (Intent B).
-        4. CRITICAL: Once you have Feedback + Attendance status, IMMEDIATELY call `handoff_to_discovery`.
+        1. If they confirm name: "Great. I just wanted to personally check in after the workshop on {context.workshop_date}."
+        2. Soft Ask: "How did you find the session? Was it helpful?" (Intent A).
+        3. Soft Check: "Were you able to stay till the end for the program details?" (Intent B).
+        4. CRITICAL: Once you have Feedback + Attendance, move to Discovery.
         
         RULES:
-        - KEEP IT SHORT. Responses must be < 2 sentences.
-        - DO NOT answer career questions here. If they start talking about goals/pain, say "That's exactly why I'm calling," and call `handoff_to_discovery`.
-        - NO small talk loops. Get the data, move to the next phase.
+        - SOFTEN THE TONE. No military precision. Be warm.
+        - "Glad to hear that" / "No worries at all".
+        - KEEP IT SHORT.
         """
         
         super().__init__(
@@ -78,9 +78,17 @@ class RapportAgent(BaseSalesAgent):
         2. User has confirmed whether they saw the pitch.
         """
         from .discovery import DiscoveryAgent
+        
+        # Log transition to Chat Context
+        self.chat_ctx.add_message(
+            role="system",
+            content="TRANSITION: RAPPORT -> DISCOVERY. Criteria Met: Feedback collected & Attendance confirmed."
+        )
+        
         logger.info("\n\n" + "="*40)
         logger.info(" TRANSITION: RAPPORT -> DISCOVERY")
         logger.info("="*40 + "\n")
+        
         return DiscoveryAgent(
             context=self.sales_context,
             chat_ctx=self.chat_ctx,
