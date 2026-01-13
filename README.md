@@ -1,78 +1,106 @@
-# LiveKit Multi-Agent Sales Demo
+# Olive LiveKit Multi-Agent Demo
 
-A proof-of-concept demonstrating a **State-Based Multi-Agent Voice System** built with [LiveKit Agents](https://docs.livekit.io/agents). 
+A state-of-the-art **Multi-Agent Voice System** built with [LiveKit Agents](https://docs.livekit.io/agents). 
 
-This project implements a sophisticated conversational AI that moves a lead through a structured sales funnel: **Rapport -> Discovery -> Pitch -> Closing**.
+This project demonstrates how to build a complex sales AI that feels like a single, cohesive persona ("Rohan") while switching between specialized underlying logic models ("Agents") for different phases of the conversation.
 
-## 🚀 Why Multi-Agent?
+## 🚀 Quick Start
 
-Single-prompt AI agents often fail at complex conversations because they try to do everything at once. They tend to rush to the "sale" immediately, ignoring the subtle social dynamics required to build trust.
+### 1. Prerequisites
+- Python 3.10+
+- LiveKit Cloud Account
 
-**The Multi-Agent Advantage:**
-*   **Patience & Pacing**: Each agent has a *specific* limited goal. The "Rapport Agent" *cannot* pitch; it forces the conversation to slow down and build a connection first.
-*   **State Management**: We define explicit "Exit Criteria" (e.g., "Must confirm pain point X before moving to Pitch"). This prevents the AI from Hallucinating progress.
-*   **Specialized Prompts**: Instead of one massive system prompt, we have smaller, hyper-focused experts. The "Discovery Agent" is an expert at asking probing questions; the "Closing Agent" is an expert at handling objections.
-*   **Human-Like Flow**: This mimics how top sales professionals break down a conversation, earning the right to ask for the sale step-by-step.
+### 2. Environment Setup
+**(Note: OpenAI, Deepgram, and Cartesia keys are optional unless you want to use your own keys. By default, the demo may rely on pre-configured secrets if available, but for a fresh clone you must provide these.)**
 
-## 🏗 Architecture
-
-The system uses a **Handoff Pattern**. All agents share a common `SalesContext` (data layer), but the `logic` switches entirely at each phase.
-
-1.  **Phase 1: Rapport Agent** (`rapport.py`)
-    *   *Goal*: Verify identity, get feedback on the previous interactions, and confirm attendance.
-    *   *Transition*: Only moves forward once specific data points are collected.
-    
-2.  **Phase 2: Discovery Agent** (`discovery.py`)
-    *   *Goal*: "The Doctor". Uncover the user's specific "Pain Point" (e.g., career stagnation, low pay).
-    *   *Transition*: Only moves forward once the user admits the problem is urgent.
-
-3.  **Phase 3: Pitch Agent** (`pitch.py`)
-    *   *Goal*: "The Solution". Link the specific pain point to the product (AI Accelerator Program).
-    *   *Transition*: Moves forward once interest is confirmed.
-
-4.  **Phase 4: Closing Agent** (`closing.py`)
-    *   *Goal*: Secure the booking deposit. Handles objections (Time, Money, Spousal approval).
-
-## 🛠️ Setup & Installation
-
-### Prerequisites
-*   Python 3.10+
-*   LiveKit Cloud Account (URL & API Key)
-*   API Keys for: OpenAI, Deepgram, Cartesia
-
-### 1. Clone & Install
-```bash
-git clone https://github.com/mohito1999/livekit-multiagent-demo.git
-cd livekit-multiagent-demo
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-```
-
-### 2. Environment Variables
-Create a `.env` file in the root directory:
+Create a `.env` file:
 ```bash
 LIVEKIT_URL=wss://...
 LIVEKIT_API_KEY=...
 LIVEKIT_API_SECRET=...
-OPENAI_API_KEY=...
-DEEPGRAM_API_KEY=...
-CARTESIA_API_KEY=...
+OPENAI_API_KEY=sk-...         # Required for logic (LLM)
+DEEPGRAM_API_KEY=...          # Required for Transcriptions (STT)
+CARTESIA_API_KEY=...          # Required for Voice (TTS)
 ```
 
 ### 3. Run the Agent
+Start the worker process (the brain):
 ```bash
 python src/main.py dev
 ```
 
-### 4. Trigger a Call (SIP)
-To simulate an outbound call (requires configured SIP Trunk in LiveKit):
+### 4. Trigger a Call
+To test the flow, use the included trigger script. 
+**Example (using your SIP ID):**
 ```bash
-python src/trigger_call.py <PHONE_NUMBER> <SIP_TRUNK_ID>
+python src/trigger_call.py +919672619061 ST_8DQKuWuMCxbQ
 ```
-*Example: `python src/trigger_call.py +15550000000 ST_...`*
+*(Replace `+91...` with your actual phone number to receive the call.)*
 
-## 📁 Key Files
-*   `src/main.py`: Entry point. Configures the AgentSession, STT (Deepgram/Hindi), TTS (Cartesia/Hindi), and LLM.
-*   `src/agents/base.py`: Defines the `SalesContext` data structure and global rules (conciseness, tone).
-*   `src/agents/*.py`: The specialized agent implementations.
+---
+
+## 🧠 System Architecture
+
+The system uses a **Handoff Pattern** where specialized agents take turns controlling the conversation, but they all share a single memory (`SalesContext`).
+
+### The Agents
+1.  **Rapport Agent** (`rapport.py`)
+    *   **Role:** The Greeter.
+    *   **Goal:** Confirm identity, build initial trust, and verify workshop attendance.
+    *   **Transition:** If user engages -> Handoff to **Profiler**. If user missed workshop -> Handoff to **Scheduler**.
+2.  **Scheduler Agent** (`scheduler.py`)
+    *   **Role:** The Rescuer.
+    *   **Goal:** Re-book users who missed the workshop.
+    *   **State:** Terminal (Ends call after booking).
+3.  **Profiler Agent** (`profiler.py`)
+    *   **Role:** The Researcher.
+    *   **Goal:** Identify the user's **Persona** (Student, Professional, etc.) and **Motivation**.
+    *   **Stealth Handoff:** Once 3 key data points are collected, it *silently* passes the context to the Strategist.
+4.  **Strategist Agent** (`strategist.py`)
+    *   **Role:** The Consultant.
+    *   **Goal:** Pitch the product using a specific angle tailored to the Persona found by the Profiler.
+    *   **Transition:** If user agrees to the logic -> Handoff to **Closing**.
+5.  **Closing Agent** (`closing.py`)
+    *   **Role:** The Closer.
+    *   **Goal:** Discuss price, handle objections (Money, Time), and send payment links.
+
+### How They Interact (The "Stealth Handoff")
+To the user, this feels like one continuous conversation. Under the hood:
+1.  Agent A calls a **Function Tool** (e.g., `handoff_to_profiler`).
+2.  The tool returns a **New Agent Instance** (e.g., `ProfilerAgent()`).
+3.  The **SalesContext** (contains name, history, answers) is passed to the new agent.
+4.  **Lifecycle Hook**: We use `async def on_enter(self)` to force the new agent to generate speech *immediately*, preventing awkward silence.
+
+### Logic Flowchart
+
+```mermaid
+graph TD
+    Start([Inbound/Outbound Call]) --> Rapport
+    
+    subgraph Phase 1: Filter
+    Rapport[Rapport Agent] -- "Missed Workshop" --> Scheduler[Scheduler Agent]
+    Rapport -- "Attended & Interested" --> Profiler[Profiler Agent]
+    end
+    
+    subgraph Phase 2: Discovery
+    Profiler -- "Collects: Persona, Motivation, Goal" --> Strategist[Strategist Agent]
+    end
+    
+    subgraph Phase 3: Pitch
+    Strategist -- "Aligns Solution to Persona" --> Closing[Closing Agent]
+    end
+    
+    subgraph Phase 4: Close
+    Closing -- "Price Reveal" --> Objection{Objection?}
+    Objection -- "Too Expensive" --> Handle[Handle Objection]
+    Handle --> Closing
+    Objection -- "Ready to Buy" --> Success([Send Payment Link])
+    end
+    
+    Scheduler --> End([End Call])
+```
+
+## 🛠️ Key Technical Patterns implemented
+-   **Context Injection**: How we pass `workshop_topic` and `lead_name` into the system prompt.
+-   **Session Injection**: How we give agents access to the `session` to trigger `generate_reply()`.
+-   **Transcript Logging**: How we track `active_agent` to ensure the full conversation history is saved to `.txt` files properly.
