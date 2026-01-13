@@ -39,9 +39,6 @@ class ProfilerAgent(BaseSalesAgent):
             """,
             **kwargs
         )
-        # Kickstart generation to solve silence on handoff
-        if self.sales_context.session:
-            asyncio.create_task(self.kickstart_generation())
 
     @llm.function_tool(description="Save user profile and move to Strategy phase.")
     async def submit_profile_and_handoff(self,

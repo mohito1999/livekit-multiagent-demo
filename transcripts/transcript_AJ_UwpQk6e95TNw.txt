@@ -1,0 +1,93 @@
+Transcript for Job: AJ_UwpQk6e95TNw
+Date: 2026-01-14T01:17:48.613253
+========================================
+
+[ASSISTANT]: Hi Mohit, I'm Rohan from bee-ten-ex. Calling about the 'Mastering AI Agents with LLMs' workshop on Sunday. Just wanted to check—how was the experience for you?
+
+[ASSISTANT]: Hi, this is Rohan calling from bee ten ex. Am I speaking to Mohit?
+
+[USER]: Yes.
+
+[ASSISTANT]: Great, Mohit! I'm calling about the 'Mastering AI Agents with LLMs' workshop on Sunday. Just wanted to check—how was the experience for you?
+
+[USER]: Yeah, it was really good.
+
+[ASSISTANT]: That's impactful. I'm curious, what part stood out for you? The tools? The strategy?
+
+[USER]: Everything,
+
+
+>>> TRANSITION: RAPPORT -> PROFILER. User engagement confirmed. <<<
+
+[USER]: (User is listening. Please continue smoothy.)
+
+[ASSISTANT]: That's fantastic to hear! That's exactly why we focus on tools. To help me recommend the right ones for you, can I ask what your background is? Are you a student, working professional, business owner, or homemaker?
+
+[USER]: I am a student right now. I am in my last year.
+
+[ASSISTANT]: Got it, Mohit! What motivated you to join the workshop? Was it curiosity, fear of missing out, or something else?
+
+[USER]: Yeah, I think it was just
+
+[USER]: because I saw an ad
+
+[USER]: of yours on Facebook, so I thought I attend and just sort of see what's happening.
+
+[USER]: Sorry, on Instagram, I mean.
+
+[ASSISTANT]: No problem at all! It’s really helpful to explore new things. Where do you see yourself in six months after attending the workshop?
+
+[USER]: I mean I just wanted
+
+[USER]: to sort of you know I am looking for a job right now obviously because it's my
+
+[USER]: college. So, I think AI has a very
+
+[USER]: sort of in demand skill right now. So yeah
+
+[ASSISTANT]: That makes complete sense! You’re looking to upskill to enhance your job prospects. Let me summarize: you're a student motivated by curiosity and seeking a job in the AI field. I'll submit your profile now and transition you to the next phase.
+
+[USER]: Ok.
+
+
+>>> TRANSITION: PROFILER -> STRATEGIST. Profile: Student, Goal: Looking for a job in the AI field <<<
+
+[USER]: (User is listening. Present the strategy now.)
+
+[ASSISTANT]: Given that you want to secure a job in the AI field, the generic path won't work. Instead, our AI Accelerator program emphasizes building real applications, like our 'AI Residency'. For example, a student recently landed a job by showcasing a working Agent instead of just a certificate. 
+
+Does this approach of building practical skills for job readiness sound like the right path for you?
+
+[USER]: Yeah, it does, can you tell me a bit more?
+
+
+>>> TRANSITION: STRATEGIST -> CLOSING. Vision aligned. <<<
+
+[USER]: (User is ready. Move to closing details/price.)
+
+[ASSISTANT]: Absolutely! Normally, the workshop is priced at Forty-five thousand two hundred rupees, but for participants like you, it’s just Thirty-eight thousand rupees. To secure your seat, you can book with a deposit of Five thousand rupees. Can I send you the link to lock your seat?
+
+[USER]: No, but this is too expensive for me.
+
+[ASSISTANT]: I completely understand, Mohit. Investing in your future can feel daunting. Can you tell me if budget constraints are what's holding you back?
+
+[USER]: Yeah yeah, I can't afford this much.
+
+[UNKNOWN TYPE]: id='item_8dba37c513fe/fnc_0' type='function_call' call_id='call_IGdoo9XcueJ6rpqqeEycETjk' arguments='{"objection_type":"money","summary":"Mohit cannot afford the cost of the workshop."}' name='handle_objection' created_at=1768333605.6527271 extra={} group_id=None
+
+[UNKNOWN TYPE]: id='item_6a60a924df69' type='function_call_output' name='handle_objection' call_id='call_IGdoo9XcueJ6rpqqeEycETjk' output='Objection logged. Address it using the Deep Knowledge Base (e.g. lifetime access, EMI options).' is_error=False created_at=1768333605.6527271
+
+[ASSISTANT]: Sahi baat hai, budget tight hone par aise decisions tough hote hain. We do provide lifetime access to all workshop materials, which means you can learn at your own pace. Also, there could be EMI options to make payments easier for you. Would solutions like these help you reconsider?
+
+[USER]: Possible, you do one thing,
+
+[USER]: you know, give me a callback tomorrow. Let me think about it.
+
+[UNKNOWN TYPE]: id='item_9de5d79211be/fnc_0' type='function_call' call_id='call_f7bwduS4KXnILhtpTqZ75vpQ' arguments='{"outcome":"follow_up"}' name='end_session' created_at=1768333632.1862779 extra={} group_id=None
+
+[UNKNOWN TYPE]: id='item_694a07c3a3f4' type='function_call_output' name='end_session' call_id='call_f7bwduS4KXnILhtpTqZ75vpQ' output='Say goodbye appropriately based on the outcome.' is_error=False created_at=1768333632.1862779
+
+[USER]: And send me some materials on WhatsApp I can go over
+
+[ASSISTANT]: Absolutely, Mohit! I’ll send some materials over WhatsApp and give you a call tomorrow to follow up. Have a great day, goodbye!
+

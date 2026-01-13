@@ -99,13 +99,16 @@ class BaseSalesAgent(agents.Agent):
                  else:
                      first_message.content.insert(0, base_instructions + "\n\n")
 
-    async def kickstart_generation(self):
-        """Forces the agent to generate a reply immediately (awaits the SpeechHandle)."""
+    async def on_enter(self, **kwargs):
+        """Called when the agent is fully active in the session."""
         if self.sales_context.session:
-            # generate_reply returns a SpeechHandle, which is awaitable but not a coroutine func
-            handle = self.sales_context.session.generate_reply()
-            await handle
-
+            # We can now safely generate speech as the previous agent has drained.
+            # generate_reply returns a SpeechHandle, expecting us to not await it directly 
+            # if we are in on_enter presumably, but actually based on docs we just call it.
+            # But wait, my manual injection was 'sales_context.session'.
+            # I will use that.
+            self.sales_context.session.generate_reply()
+            
     def get_context_description(self) -> str:
         """Returns a string description of the current context for the LLM."""
         return f"""

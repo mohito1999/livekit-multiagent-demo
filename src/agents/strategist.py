@@ -70,9 +70,6 @@ class StrategistAgent(BaseSalesAgent):
             """,
             **kwargs
         )
-        # Kickstart generation to solve silence on handoff
-        if self.sales_context.session:
-            asyncio.create_task(self.kickstart_generation())
 
     @llm.function_tool(description="User buys into the vision. Move to closing.")
     async def handoff_to_closing(self):
